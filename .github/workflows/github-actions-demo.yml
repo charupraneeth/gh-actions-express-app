@@ -38,11 +38,14 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build the Docker image
-        run: docker build --tag ${{ env.USER_NAME }}/${{ env.PROJECT_ID }}:${{ steps.version-info.outputs.APP_VERSION }} .
+      - name: Echo vars
+        run: echo "$env"
+        run: echo "$steps"
+      # - name: Build the Docker image
+      #   run: docker build --tag ${{ env.USER_NAME }}/${{ env.PROJECT_ID }}:${{ steps.version-info.outputs.APP_VERSION }} .
 
-      - name: Add latest tag
-        run: docker tag docker build --tag ${{ env.USER_NAME }}/${{ env.PROJECT_ID }}:latest ${{ env.USER_NAME }}/${{ env.PROJECT_ID }}
+      # - name: Add latest tag
+      #   run: docker tag ${{ env.USER_NAME }}/${{ env.PROJECT_ID }}:${{ steps.version-info.outputs.APP_VERSION }} ${{ env.USER_NAME }}/${{ env.PROJECT_ID }}:latest
 
-      - name: Push the Docker image to Docker hub
-        run: docker push ${{ env.USER_NAME }}/${{ env.PROJECT_ID }} --all-tags
+      # - name: Push the Docker image to Docker hub
+      #   run: docker push ${{ env.USER_NAME }}/${{ env.PROJECT_ID }} --all-tags
