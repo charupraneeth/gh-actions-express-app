@@ -3,20 +3,43 @@ on:
   push:
     branches:
       - main
+
+env:
+  node-version: 16
+  USER_NAME: "charupraneeth"
+  PROJECT_ID: "gh-actions-express-app"
+
 jobs:
   build-push-docker-hub:
     name: Build and push to docker hub
     if: startsWith(github.event.head_commit.message, '[mark-')
     runs-on: ubuntu-latest
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - name: Check out repository code
-        uses: actions/checkout@v3
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.node-version}}
+
+      - name: Get app version from commit message
+        id: version-info
+        run: >-
+          echo "APP_VERSION=$(
+            echo ${{github.event.head_commit.message}} |
+            sed -n 's/.*\[mark-\(v[0-9][0-9\.]*\)\].*/\1/p'
+          )" >> $GITHUB_OUTPUT
+
+      - name: Install NPM dependencies
         run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
+          npm ci
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build the Docker image
+        run: docker build -t ${{ env.USER_NAME }}/${{ env.PROJECT_ID }}:latest -t ${{ env.USER_NAME }}/${{ env.PROJECT_ID }}:${{ steps.version-info.outputs.APP_VERSION }} .
+
+      - name: Push the Docker image to Docker hub
+        run: docker push ${{ env.USER_NAME }}/${{ env.PROJECT_ID }} --all-tags
