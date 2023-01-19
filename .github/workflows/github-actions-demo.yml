@@ -33,7 +33,6 @@ jobs:
           npm ci
 
       - name: Build the Docker image
-        if: steps.version-info.output.appver != ''
         run: docker build . --tag charupraneeth/${{ env.PROJECT_ID }}:${{ steps.version-info.outputs.APP_VERSION }}
 
       - name: Add latest tag
