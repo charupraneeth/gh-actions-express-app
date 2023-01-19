@@ -23,19 +23,19 @@ jobs:
         id: version-info
         if: startsWith(github.event.head_commit.message, '[mark-')
         run: |
-          APP_VERSION=$(echo ${{github.event.head_commit.message}} | sed -n 's/.*\[mark-\(v[0-9][0-9\.]*\)\].*/\1/p')
-          echo "::set-output name=APP_VERSION::$APP_VERSION"
+          appver=$(echo ${{github.event.head_commit.message}} | sed -n 's/.*\[mark-\(v[0-9][0-9\.]*\)\].*/\1/p')
+          echo "::set-output name=appver::$appver"
 
       - name: Install NPM dependencies
         run: |
           npm ci
 
       - name: Build the Docker image
-        if: steps.version-info.output.APP_VERSION != ''
-        run: docker build --tag charupraneeth/${{ env.PROJECT_ID }}:${{ steps.version-info.output.APP_VERSION }} .
+        if: steps.version-info.output.appver != ''
+        run: docker build --tag charupraneeth/${{ env.PROJECT_ID }}:${{ steps.version-info.output.appver }} .
 
       - name: Add latest tag
-        run: docker tag charupraneeth/${{ env.PROJECT_ID }}:${{ steps.version-info.output.APP_VERSION }} charupraneeth/${{ env.PROJECT_ID }}:latest
+        run: docker tag charupraneeth/${{ env.PROJECT_ID }}:${{ steps.version-info.output.appver }} charupraneeth/${{ env.PROJECT_ID }}:latest
 
       - name: Login to Docker Hub
         uses: docker/login-action@v2
