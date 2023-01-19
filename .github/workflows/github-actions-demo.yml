@@ -23,7 +23,7 @@ jobs:
         id: version-info
         if: startsWith(github.event.head_commit.message, '[mark-')
         run: |
-          APP_VERSION = $(echo ${{github.event.head_commit.message}} | sed -n 's/.*\[mark-\(v[0-9][0-9\.]*\)\].*/\1/p')
+          APP_VERSION=$(echo ${{github.event.head_commit.message}} | sed -n 's/.*\[mark-\(v[0-9][0-9\.]*\)\].*/\1/p')
           echo "::set-output name=APP_VERSION::$APP_VERSION"
 
       - name: Install NPM dependencies
