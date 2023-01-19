@@ -1,9 +1,11 @@
 const express = require("express");
+const morgan = require("morgan");
 
 const app = express();
 /* eslint-disable */
 const port = process.env.PORT || 1337;
 /* eslint-enable */
+app.use(morgan("combined"));
 
 app.get("/", (req, res) => {
   res.json({
