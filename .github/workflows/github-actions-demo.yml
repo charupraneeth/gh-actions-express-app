@@ -39,8 +39,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Echo version
-        run: >-
-        echo "APP_VERSION: ${{ steps.version-info.outputs.APP_VERSION }}"
+        run: echo "${{ steps.version-info.outputs.APP_VERSION }}"
 
       # - name: Build the Docker image
       #   run: docker build --tag ${{ env.USER_NAME }}/${{ env.PROJECT_ID }}:${{ steps.version-info.outputs.APP_VERSION }} .
