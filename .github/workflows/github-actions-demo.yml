@@ -6,7 +6,7 @@ on:
 jobs:
   build-push-docker-hub:
     name: Build and push to docker hub
-    if: startsWith(github.event.head_commit.message, '[promote-')
+    if: startsWith(github.event.head_commit.message, '[mark-')
     runs-on: ubuntu-latest
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
