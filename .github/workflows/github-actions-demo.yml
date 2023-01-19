@@ -38,8 +38,10 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Echo vars
+      - name: Echo env
         run: echo "$env"
+
+      - name: Echo steps
         run: echo "$steps"
       # - name: Build the Docker image
       #   run: docker build --tag ${{ env.USER_NAME }}/${{ env.PROJECT_ID }}:${{ steps.version-info.outputs.APP_VERSION }} .
