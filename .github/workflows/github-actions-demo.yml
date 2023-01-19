@@ -39,7 +39,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Echo version
-        run: echo "${{ steps.version-info.outputs.APP_VERSION }}"
+        run: echo "APP_VERSION=$(echo ${{github.event.head_commit.message}} | sed -n 's/.*\[mark-\(v[0-9][0-9\.]*\)\].*/\1/p')"
 
       # - name: Build the Docker image
       #   run: docker build --tag ${{ env.USER_NAME }}/${{ env.PROJECT_ID }}:${{ steps.version-info.outputs.APP_VERSION }} .
