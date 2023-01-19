@@ -38,6 +38,9 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Check commit message format
+        run: echo "${{github.event.head_commit.message}}" | grep -q '\[mark-[0-9]\+\.[0-9]\+\.[0-9]\+\]' && echo "valid commit" || echo "invalid commit"
+
       - name: Echo version
         run: echo "APP_VERSION=$(echo ${{github.event.head_commit.message}} | sed -n 's/.*\[mark-\(v[0-9][0-9\.]*\)\].*/\1/p')"
 
