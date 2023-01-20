@@ -49,5 +49,5 @@ jobs:
           END
         shell: bash
 
-      - name: Create a test file in server
-        run: ssh ${{ env.SERVER_NAME}} 'cd /home/charp && touch test.txt'
+      - name: Move docker-compose file to vm
+        run: scp docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/charp
