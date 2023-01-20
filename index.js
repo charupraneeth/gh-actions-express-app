@@ -9,7 +9,7 @@ app.use(morgan("combined"));
 
 app.get("/", (req, res) => {
   res.json({
-    message: "hello 👋 from the index route unknown version",
+    message: "hello 👋 from the index route v1.5.0",
   });
 });
 
@@ -30,6 +30,4 @@ function errorHandler(err, req, res, next) {
 app.use(notFound);
 app.use(errorHandler);
 
-app.listen(port, () =>
-  console.log(`app listening at port unknown version: ${port}`)
-);
+app.listen(port, () => console.log(`app listening at port v1.5.0: ${port}`));
