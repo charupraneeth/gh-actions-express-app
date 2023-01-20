@@ -49,5 +49,8 @@ jobs:
           END
         shell: bash
 
-      - name: Move docker-compose file to vm
-        run: scp -i ~/.ssh/${{ env.SERVER_NAME }}.key docker-compose.yml deploy.sh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/charp
+     -  name: Create project directory if not exists
+        run: ssh ${{ env.SERVER_NAME}} mkdir -p ${{ env.PROJECT_ID }}
+
+      - name: Move docker-compose.yml and deploy.sh script to vm
+        run: scp -i ~/.ssh/${{ env.SERVER_NAME }}.key docker-compose.yml deploy.sh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/charp/${{ env.PROJECT_ID }}
