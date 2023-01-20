@@ -50,7 +50,7 @@ jobs:
         shell: bash
 
       - name: Create project directory if not exists
-        run: ssh ${{ env.SERVER_NAME}} mkdir -p ${{ env.PROJECT_ID }}
+        run: ssh ${{ env.SERVER_NAME}} mkdir -p /home/charp/${{ env.PROJECT_ID }}
 
       - name: Move docker-compose.yml and deploy.sh script to vm
         run: scp -i ~/.ssh/${{ env.SERVER_NAME }}.key docker-compose.yml deploy.sh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/charp/${{ env.PROJECT_ID }}
