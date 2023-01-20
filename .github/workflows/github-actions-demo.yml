@@ -49,7 +49,7 @@ jobs:
           END
         shell: bash
 
-     -  name: Create project directory if not exists
+      - name: Create project directory if not exists
         run: ssh ${{ env.SERVER_NAME}} mkdir -p ${{ env.PROJECT_ID }}
 
       - name: Move docker-compose.yml and deploy.sh script to vm
