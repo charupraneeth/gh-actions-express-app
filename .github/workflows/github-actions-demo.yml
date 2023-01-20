@@ -50,4 +50,4 @@ jobs:
         shell: bash
 
       - name: Move docker-compose file to vm
-        run: scp docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/charp
+        run: scp -i ~/.ssh/${{ env.SERVER_NAME }}.key docker-compose.yml ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/home/charp
