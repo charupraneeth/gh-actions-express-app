@@ -55,4 +55,4 @@ jobs:
           SSH_PORT: 22
           SSH_USER: ${{ secrets.SSH_USER }}
           SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      - run: ssh ${{ steps.ssh.outputs.SERVER }} touch /home/charp/test.txt
+      - run: ssh ${{ steps.ssh.outputs.SERVER }} cd /home/charp && touch test.txt
